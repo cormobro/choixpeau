@@ -5,17 +5,25 @@ import { Provider } from  'react-redux';
 import { createStore } from  'redux';
 //import  reducers  from  './reducers';
 import Result from './containers/Result';
-
+let selectedHouses = '';
 const houses = [
 	'Serpentard',
 	'Griffondor',
 	'Serdaigle',
 	'Pouffsoufle',
 ];
-const  reducer = (state, action) => ({
-	houses,
-	selectedHouses:  houses[Math.floor(Math.random() * 4)]
-})
+function reducer(state = {houses, selectedHouses}, action) {
+	console.log('reducer',state.houses, state.selectedHouses,action)
+	switch (action.type) {
+		case 'UPDATE_CHOICE_WITH_DELAY':
+			return {
+				houses,
+				selectedHouses:  houses[action.indexSelected]
+			}; 
+		default:
+			return state; 
+	}
+}
 const  store = createStore(reducer);
 
 class App extends Component {
